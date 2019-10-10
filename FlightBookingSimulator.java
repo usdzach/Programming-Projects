@@ -49,10 +49,7 @@ public class FlightBookingSimulator
                 // Read in the cities
                 while(cityBuf.ready())
                     cities.add(new City(cityBuf.readLine()));
-
-                /////////////////////////////////////////////////////////////////////////
-
-
+                
                 // Read in the departing flights from each city
                 while(flightBuf.ready())
                 {
@@ -62,7 +59,6 @@ public class FlightBookingSimulator
                     tempTicketPrice = Integer.parseInt(temp.nextToken().trim());
 
                     int index = getCityIndex(cities, 0, cities.size() - 1, tempDepartureCity);
-
                     if(index != -1)
                         cities.get(index).addFlight(getCity(cities, 0, cities.size() - 1, tempDestination), tempTicketPrice);
                 }
@@ -109,20 +105,14 @@ public class FlightBookingSimulator
                 Queue q = new Queue();
                 City visitedCity, adjacentCity = null, startingCity;
                 int minPrice = 0, tempPrice = 0;
-
-
                 startingCity = getCity(cities, 0, cities.size() - 1, userDepartureCity);
                 startingCity.setCostToGetHere(0);
-
-
                 q.enqueue(startingCity);
 
                 while(!q.isEmpty())
                 {
                     visitedCity = q.dequeue();
                     visitedCity.setVisited(true);
-
-
                     for(int i = 0; i < visitedCity.getFlights().size(); i++)
                     {
                         adjacentCity = visitedCity.getFlights().get(i).getDestination();
@@ -151,8 +141,6 @@ public class FlightBookingSimulator
                         tempCity = tempCity.getParent();
                     }
                     flightPath.add(getCity(cities, 0, cities.size() - 1, userDepartureCity));
-
-
                     System.out.println("\nResquest is to fly from " + userDepartureCity + " to " + userDestination + ".");
                     for(int i = flightPath.size() - 1; i > 0; i--)
                     {
@@ -160,7 +148,6 @@ public class FlightBookingSimulator
                                          + "\tCost: $" + getTicketPrice(flightPath.get(i).getFlights(), flightPath.get(i - 1)));
                     }
                     System.out.println("Total Cost................... $" + getCity(cities, 0, cities.size() - 1, userDestination).getCostToGetHere());
-
                 }
                 else
                     System.out.println("\nResquest is to fly from " + userDepartureCity + " to " + userDestination + ".\n"
@@ -183,15 +170,12 @@ public class FlightBookingSimulator
         if(r >= l)
         {
             int mid = l + (r - l)/2;
-
             if((cities.get(mid).getCityName()).compareTo(cityName) == 0)
                 return cities.get(mid);
             if((cities.get(mid).getCityName()).compareTo(cityName) > 0)
                 return getCity(cities, l, mid - 1, cityName);
-
             return getCity(cities, mid + 1, r, cityName);
         }
-
         return null;
     }
 
@@ -210,15 +194,12 @@ public class FlightBookingSimulator
         if(r >= l)
         {
             int mid = l + (r - l)/2;
-
             if((cities.get(mid).getCityName()).compareTo(cityName) == 0)
                 return mid;
             if((cities.get(mid).getCityName()).compareTo(cityName) > 0)
                 return getCityIndex(cities, l, mid - 1, cityName);
-
             return getCityIndex(cities, mid + 1, r, cityName);
         }
-
         return -1;
     }
 }
